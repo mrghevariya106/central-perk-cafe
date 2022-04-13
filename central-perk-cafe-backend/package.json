@@ -1,0 +1,19 @@
+{
+  "name": "central-perk-cafe-backend",
+  "version": "1.0.0",
+  "description": "Backend for Central Perk Cafe Angular Application",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon server.js"
+  },
+  "author": "May Patel",
+  "license": "ISC",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.0",
+    "express": "^4.17.3",
+    "mysql": "^2.18.1",
+    "nodemon": "^2.0.15"
+  }
+}
