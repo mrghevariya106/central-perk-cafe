@@ -4,6 +4,7 @@ const connection = require("../connection");
 const router = express.Router();
 
 const jwt = require("jsonwebtoken");
+const nodemailer = require("nodemailer");
 require("dotenv").config();
 
 router.post("/signup", (req, res) => {
@@ -46,6 +47,48 @@ router.post("/login", (req, res) => {
         res.status(200).json({ token: accessToken });
       } else {
         res.status(400).json({ message: "Something went wrong. Please try again." });
+      }
+    } else {
+      return res.status(500).json(err);
+    }
+  });
+});
+
+var transporter = nodemailer.createTransport({
+  service: 'gmail',
+  auth: {
+    user: process.env.EMAIL,
+    password: process.env.PASSWORD
+  }
+});
+
+router.post("/forgotPassword", (req, res) => {
+  const user = req.body;
+  query = "select email, password from user where email=?";
+  connection.query(query, [user.email], (err, results) => {
+    if (!err) {
+      if (results.length <= 0) {
+        return res.status(200).json({ message: "Password sent successfully to your mail." });
+      } else {
+        var mailOptions = {
+          from: process.env.EMAIL,
+          to: results[0].email,
+          subject: "Password By Central Perk Cafe eAdmin System",
+          html:
+            "<p><b>Your Login details for eCentralPerkCafePass</b><br><b>Email:</b>" +
+            results[0].email +
+            "<br><b>.Password:</b>" +
+            results[0].password +
+            '<br><b><a href="http://localhost:4200">Click Here To Login</a></b><br </p>',
+        };
+        transporter.sendMail(mailOptions, function (error, info) {
+          if (error) {
+            console.log(error);
+          } else {
+            console.log("Email Sent: " + info.response);
+          }
+        });
+        return res.status(200).json({ message: "Password sent successfully to your mail." });
       }
     } else {
       return res.status(500).json(err);
