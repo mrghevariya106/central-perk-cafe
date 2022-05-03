@@ -59,7 +59,10 @@ var transporter = nodemailer.createTransport({
   auth: {
     user: process.env.EMAIL,
     password: process.env.PASSWORD
-  }
+  },
+  // tls: {
+  //   rejectUnauthorized: false
+  // }
 });
 
 router.post("/forgotPassword", (req, res) => {
@@ -95,5 +98,37 @@ router.post("/forgotPassword", (req, res) => {
     }
   });
 });
+
+router.get("/get", (req, res) => {
+  var query = "select id,name,email,contactNumber,status from user where role='user'";
+  connection.query(query, (err, results) => {
+    if (!err) {
+      return res.status(200).json(results);
+    } else {
+      return res.status(500).json(err);
+    }
+  });
+});
+
+router.patch("/update", (req, res) => {
+  let user = req.body;
+  var query = "update user set status=? where id=?";
+  connection.query(query, [user.status, user.id], (err, results) => {
+    if (!err) {
+      if (results.affectedRows == 0) {
+        return res.status(404).json({ message: "User ID does not exist." });
+      }
+      return res.status(200).json({ message: "User Successfully Updated." });
+    } else {
+      return res.status(500).json(err);
+    }
+  });
+});
+
+router.get("checkToken", (req, res) => {
+  return res.status(200).json({ message: "true"});
+})
+
+
 
 module.exports = router;
