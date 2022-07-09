@@ -1,0 +1,51 @@
+<html>
+    <head>
+        <style>
+            table {
+                font-family: arial,sans-serif;
+                border-collapse: collapse;
+                width: 100%;
+            }
+            
+            td,th {
+                border: 1px solid #dddddd;
+                text-align: center;
+                padding: 8px;
+            }
+        </style>
+    </head>
+    <body>
+        <h3 style="text-align: center;">CentralPerk Cafe Invoice</h3>
+        <table>
+            <tr>
+                <th>Name: <%= name %></th>
+                <th>Email: <%= email %></th>
+            </tr>
+            <tr>
+                <th>Contact Number: <%= contactNumber %></th>
+                <th>Payment Method: <%= paymentMethod %></th>
+            </tr>
+        </table>
+        <h3>Product Details:</h3>
+        <table>
+            <tr>
+                <th>Name</th>
+                <th>Category</th>
+                <th>Quantity</th>
+                <th>Price</th>
+                <th>Sub Total</th>
+            </tr>
+            <% if(productDetails.length > 0) { %>
+                <% productDetails.forEach(product => {%>
+                    <tr><%= product.name %></tr>
+                    <tr><%= product.category %></tr>
+                    <tr><%= product.quantity %></tr>
+                    <tr><%= product.price %></tr>
+                    <tr><%= product.total %></tr>
+                <%});%>
+            <%}%>
+        </table>
+        <h3>Total: <%= totalAmount %></h3>
+        <h3>Thank you for visiting Central*Perk*Cafe. Have a good day!</h3>
+    </body>
+</html>
