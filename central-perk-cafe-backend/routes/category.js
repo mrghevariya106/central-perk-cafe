@@ -18,7 +18,7 @@ router.post("/add", auth.authenticateToken, checkRole.checkRole, (req, res, next
 
 router.get("/get", auth.authenticateToken, (req, res, next) => {
     var query = "select * from category order by name";
-    connection.get(query, (err, results) => {
+    connection.query(query, (err, results) => {
         if (!err) {
             return res.status(200).json(results);
         } else {
@@ -30,7 +30,7 @@ router.get("/get", auth.authenticateToken, (req, res, next) => {
 router.patch("/update", auth.authenticateToken, checkRole.checkRole, (req, res, next) => {
     let product = req.body;
     var query = "update category set name=? where id=?";
-    connection.query(query, [product.id, product.name], (err, results) => {
+    connection.query(query, [product.name, product.id], (err, results) => {
         if (!err) {
             if (results.affectedRows == 0) {
                 return res.status(404).json({ message: "Category id does not found" });
