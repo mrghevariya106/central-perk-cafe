@@ -37,15 +37,17 @@
             </tr>
             <% if(productDetails.length > 0) { %>
                 <% productDetails.forEach(product => {%>
-                    <tr><%= product.name %></tr>
-                    <tr><%= product.category %></tr>
-                    <tr><%= product.quantity %></tr>
-                    <tr><%= product.price %></tr>
-                    <tr><%= product.total %></tr>
+                    <tr>
+                        <td><%= product.name %></td>
+                        <td><%= product.category %></td>
+                        <td><%= product.quantity %></td>
+                        <td><%= product.price %></td>
+                        <td><%= product.total %></td>
+                    </tr>
                 <%});%>
             <%}%>
         </table>
         <h3>Total: <%= totalAmount %></h3>
-        <h3>Thank you for visiting Central*Perk*Cafe. Have a good day!</h3>
+        <h3>Thank you for visiting Central-Perk-Cafe. Have a good day!</h3>
     </body>
 </html>
